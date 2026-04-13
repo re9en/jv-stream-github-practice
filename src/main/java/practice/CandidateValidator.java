@@ -4,10 +4,13 @@ import java.util.function.Predicate;
 import model.Candidate;
 
 public class CandidateValidator implements Predicate<Candidate> {
+    private static final String NATIONALITY = "Ukrainian";
+    private static final int REQUIRED_YEARS_IN_UKRAINE = 10;
+    private static final int MIN_AGE = 35;
 
     @Override
     public boolean test(Candidate candidate) {
-        if (candidate.getAge() < 35) {
+        if (candidate.getAge() < MIN_AGE) {
             return false;
         }
 
@@ -15,7 +18,7 @@ public class CandidateValidator implements Predicate<Candidate> {
             return false;
         }
 
-        if (!"Ukrainian".equals(candidate.getNationality())) {
+        if (!NATIONALITY.equals(candidate.getNationality())) {
             return false;
         }
 
@@ -23,6 +26,6 @@ public class CandidateValidator implements Predicate<Candidate> {
         int firstYear = Integer.parseInt(years[0]);
         int lastYear = Integer.parseInt(years[1]);
 
-        return (lastYear - firstYear) >= 10;
+        return (lastYear - firstYear) >= REQUIRED_YEARS_IN_UKRAINE;
     }
 }
