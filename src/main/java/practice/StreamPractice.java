@@ -21,7 +21,7 @@ public class StreamPractice {
     public int findMinEvenNumber(List<String> numbers) {
 
         return numbers.stream()
-                .flatMap(s -> Arrays.stream(s.split(",")))
+                .flatMap(s -> Arrays.stream(s.trim().split(",")))
                 .map(Integer::parseInt)
                 .filter(n -> n % 2 == 0)
                 .min(Integer::compareTo)
@@ -55,8 +55,8 @@ public class StreamPractice {
 
     public List<Person> selectMenByAge(List<Person> peopleList, int fromAge, int toAge) {
         return peopleList.stream()
-                .filter(p -> p.getSex().equals(Person.Sex.MAN))
-                .filter(person -> person.getAge() > fromAge && person.getAge() <= toAge)
+                .filter(p -> p.getSex() == Person.Sex.MAN)
+                .filter(person -> person.getAge() >= fromAge && person.getAge() <= toAge)
                 .collect(Collectors.toList());
     }
 
@@ -73,10 +73,10 @@ public class StreamPractice {
     public List<Person> getWorkablePeople(int fromAge, int femaleToAge,
                                           int maleToAge, List<Person> peopleList) {
         return peopleList.stream()
-                .filter(p -> (p.getSex().equals(Person.Sex.WOMAN)
+                .filter(p -> (p.getSex() == Person.Sex.WOMAN
                         && p.getAge() >= fromAge
                         && p.getAge() <= femaleToAge)
-                        || (p.getSex().equals(Person.Sex.MAN)
+                        || (p.getSex() == Person.Sex.MAN
                         && p.getAge() >= fromAge && p.getAge() <= maleToAge))
                 .collect(Collectors.toList());
     }
@@ -88,7 +88,7 @@ public class StreamPractice {
      */
     public List<String> getCatsNames(List<Person> peopleList, int femaleAge) {
         return peopleList.stream()
-                .filter(person -> person.getSex().equals(Person.Sex.WOMAN)
+                .filter(person -> person.getSex() == Person.Sex.WOMAN
                         && person.getAge() >= femaleAge)
                 .map(Person::getCats)
                 .flatMap(Collection::stream)
